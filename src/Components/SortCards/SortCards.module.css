@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  width: 50%;
+  border: 2px solid #212529;
+  border-radius: 10px;
+  background-color: #dee2e6;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: #495057;
+  margin: 16px;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 32px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 32px;
+  padding: 16px;
+  background-color: #adb5bd;
+  border: 2px solid #212529;
+  border-radius: 4px;
+  color: #f8f9fa;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
