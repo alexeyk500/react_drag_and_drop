@@ -12,6 +12,47 @@ const SortCards = () => {
     ]
   )
 
+  const [draggableCard, setDraggableCard] = useState(null)
+
+
+  function dragStartHandler(e, card) {
+    console.log('start', card)
+    setDraggableCard(card)
+  }
+
+  function dragEndHandler(e) {
+    e.target.style.backgroundColor = '#adb5bd'
+  }
+
+  function dragOverHandler(e) {
+    e.preventDefault()
+    e.target.style.backgroundColor = '#6c757d'
+  }
+
+  function dropHandler(e, card) {
+    e.preventDefault()
+    console.log(' drop', card)
+    e.target.style.backgroundColor = '#adb5bd'
+
+    setCardsList(cardsList.map((curCard)=>{
+      if (curCard.id === card.id) {
+        return {...curCard, order: draggableCard.order}
+      }
+      if (curCard.id === draggableCard.id) {
+        return {...curCard, order: card.order}
+      }
+      return curCard
+    }))
+  }
+
+  const sortCards = (a, b) => {
+    if ( a.order > b.order ) {
+      return 1
+    } else {
+      return -1
+    }
+  }
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>
@@ -19,15 +60,24 @@ const SortCards = () => {
       </div>
       <div className={classes.list}>
         {
-          cardsList.map(card =>
-              <div className={classes.card}>
-                <div>
-                  Card
-                </div>
-                <div>
-                  {card.text}
-                </div>
+          cardsList.sort(sortCards).map(card =>
+            <div
+              key={card.id}
+              className={classes.card}
+              draggable={true}
+              onDragStart={(e)=>{dragStartHandler(e, card)}}
+              onDragLeave={(e)=>{dragEndHandler(e)}}
+              onDragEnd={(e)=>{dragEndHandler(e)}}
+              onDragOver={(e)=>{dragOverHandler(e)}}
+              onDrop={(e)=>{dropHandler(e, card)}}
+            >
+              <div>
+                Card
               </div>
+              <div>
+                {card.text}
+              </div>
+            </div>
           )
         }
 
